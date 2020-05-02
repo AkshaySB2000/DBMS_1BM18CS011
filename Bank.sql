@@ -48,6 +48,21 @@ select * from BankAccount;
 select * from BankCustomer;
 select * from Loan;
 select * from Depositer;
-select C.customername from BankCustomer C where exists(select D.customername,count(D.customername) from Depositer D, BankAccount BA where D.accno = BA.accno and D.customername = C.customername and BA.branchname = 'SBI_ResidencyRoad' group by D.customername having count(D.customername)>=2);
-select BC.customername from BankCustomer BC where not exists(select branchname from Branch where branchcity = 'Delhi' except (select BA.branchname from Depositer D, BankAccount BA where D.accno = BA.accno and D.customername = BC.customername));
-delete from BankAccount where branchname in(select branchname from Branch where branchcity = 'Bombay');
+
+select C.customername from BankCustomer C
+		where exists(select D.customername,count(D.customername) 
+		from Depositer D, BankAccount BA 
+				where D.accno = BA.accno and D.customername = C.customername 
+				and BA.branchname = 'SBI_ResidencyRoad' group by D.customername 
+						having count(D.customername)>=2);
+					
+select BC.customername from BankCustomer BC 
+		where not exists(select branchname from Branch 
+		where branchcity = 'Delhi' except 
+				(select BA.branchname from Depositer D, BankAccount BA
+						where D.accno = BA.accno and D.customername = BC.customername));
+					
+delete from BankAccount
+		where branchname in
+		(select branchname from Branch 
+				where branchcity = 'Bombay');
