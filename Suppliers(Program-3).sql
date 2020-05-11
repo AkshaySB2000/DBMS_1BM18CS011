@@ -32,7 +32,7 @@ SELECT DISTINCT P.pname FROM Parts P, Catalog C WHERE P.pid = C.pid;
 
 SELECT S.sname FROM Supplier S 
 WHERE NOT EXISTS ((SELECT P.pid  FROM Parts P) 
-					except (SELECT C.pid FROM Catalog C 
+					not in (SELECT C.pid FROM Catalog C 
 							WHERE C.sid = S.sid));
 
 SELECT S.sname
@@ -40,7 +40,7 @@ FROM SUPPLIER S
 WHERE NOT EXISTS (( SELECT P.pid
 FROM Parts P
 WHERE P.color = 'Red' )
-			except
+			not in
 			( SELECT C.pid
 			FROM Catalog C, Parts P
 			WHERE C.sid = S.sid AND
