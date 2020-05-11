@@ -64,7 +64,7 @@ where snum in (select e1.snum
 select fname
 from Faculty
 where not exists(select room from Class
-	         except
+	         not in
                  select distinct c.room 
                  from Class c
                  where c.fid=Faculty.fid);              
