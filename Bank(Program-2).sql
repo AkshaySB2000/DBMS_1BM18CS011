@@ -58,7 +58,7 @@ select C.customername from BankCustomer C
 					
 select BC.customername from BankCustomer BC 
 		where not exists(select branchname from Branch 
-		where branchcity = 'Delhi' except 
+		where branchcity = 'Delhi' NOT IN 
 				(select BA.branchname from Depositer D, BankAccount BA
 						where D.accno = BA.accno and D.customername = BC.customername));
 					
